@@ -29,7 +29,7 @@ const Tournaments = (props) => {
 
   const onHandleDelete = (list) => {
     setIsShow(true)
-    const find = tournaments.find(tournament => tournament.id === list)
+    const find = tournaments.find(tournament => tournament.id === list.id)
     getData()
     setTournament(find)
   }
@@ -69,7 +69,7 @@ const Tournaments = (props) => {
                         {list.attributes.description}
                       </Card.Text>
                       <Button variant="primary" onClick={() => onViewTournament(list.id)}>Check to view</Button>{' '}
-                      <Button variant="danger" onClick={() => onHandleDelete(list.id)}>Delete Tournament</Button>{' '}
+                      <Button variant="danger" onClick={() => onHandleDelete(list)}>Delete Tournament</Button>{' '}
                       <Button variant="warning" onClick={() => editTournament(list)}>Edit Tournament</Button>
                     </Card.Body>
                   </Card>

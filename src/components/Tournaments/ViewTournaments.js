@@ -1,6 +1,6 @@
 import * as axios from '../../utils/axiosApi'
 import { useHistory, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Spinner, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { successMessage } from '../../utils/message'
 
@@ -44,17 +44,23 @@ const ViewTournaments = () => {
 
   const [participantLength, setParticipantLength] = useState([])
 
-  if (participantLength.length === 0) {
+  const getParticipantsLength = () => {
     const url = `tournaments/${id}/participants.json`
     axios.request(url, {}, "GET").then(res => {
       setParticipantLength(res)
       return res
     })
   }
+  if (participantLength.length === 0) {
+    getParticipantsLength()
+  }
   const getParticipants = () => {
     history.push(`/tournaments/${id}/participants`)
   }
 
+  useEffect(() => {
+    getParticipantsLength()
+  })
   return (
     <>
       {

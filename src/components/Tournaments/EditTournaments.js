@@ -44,7 +44,7 @@ const EditTournaments = () => {
             <Form.Label column sm="2">
               Tournament Name
             </Form.Label>
-            <Col sm="10">-
+            <Col sm="10">
               <Form.Control type="text" defaultValue={newEdit.data.attributes.name} placeholder="Tournament Name" name="name" onChange={onHandleChange} required />
             </Col>
           </Form.Group>

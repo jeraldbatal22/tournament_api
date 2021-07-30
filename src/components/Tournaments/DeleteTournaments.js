@@ -2,14 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap'
 import * as axios from '../../utils/axiosApi'
-import { successMessage } from '../../utils/message';
 
 const DeleteTournaments = (props) => {
   const handleClose = () => props.onHide(false);
   const onHandleDelete = () => {
     const url = `tournaments/${props.tournament.id}.json`
     axios.request(url, {}, "DELETE").then(res => {
-      successMessage('Success', `Successfully deleted ${props.tournament.attributes.name}`)
+      console.log('Success', `Successfully deleted ${props.tournament.attributes.name}`)
       return res
     })
     props.getData()

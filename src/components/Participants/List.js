@@ -3,7 +3,6 @@ import { ListGroup, Spinner, Button, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as axios from '../../utils/axiosApi'
 import { useHistory, useParams } from 'react-router-dom'
-import { errorMessage, successMessage } from '../../utils/message'
 
 const List = (props) => {
   const history = useHistory()
@@ -39,11 +38,11 @@ const List = (props) => {
     console.log(participant)
     const find = participants.find(res => res.attributes.name === addParticipant)
     if (find) {
-      return errorMessage('Error', `Participant ${addParticipant} is already taken`)
+      return console.log('Error', `Participant ${addParticipant} is already taken`)
     }
     if (addParticipant) {
       axios.request(editUrl, { data: { attributes: { name: addParticipant } } }, "PUT").then(res => {
-        successMessage('Success', `Successfully Updated ${participant.attributes.name} to ${addParticipant}`)
+        console.log('Success', `Successfully Updated ${participant.attributes.name} to ${addParticipant}`)
         getParticipants()
         console.log(res)
         return res

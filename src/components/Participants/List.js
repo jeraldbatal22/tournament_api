@@ -27,7 +27,6 @@ const List = (props) => {
   const deleteParticipant = (participant) => {
     const deleteUrl = `/tournaments/${id}/participants/${participant.id}.json`
     axios.request(deleteUrl, {}, "DELETE").then(res => {
-      successMessage('Success', `Successfully deleted ${participant.attributes.name}`)
       getParticipants()
       return res
     })

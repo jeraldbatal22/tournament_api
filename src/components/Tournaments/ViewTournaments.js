@@ -2,6 +2,7 @@ import * as axios from '../../utils/axiosApi'
 import { useHistory, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Spinner, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { errorMessage, successMessage } from '../../utils/message'
 
 const ViewTournaments = () => {
   const history = useHistory()
@@ -30,11 +31,11 @@ const ViewTournaments = () => {
 
     const find = participantLength.find(res => res.attributes.name === addParticipant)
     if (find) {
-      return console.log('Error', `Participant ${addParticipant} is already taken`)
+      return errorMessage('Error', `Participant ${addParticipant} is already taken`)
     }
 
     if (addParticipant === "") {
-      return console.log('Error', `Invalid Participant`)
+      return errorMessage('Error', `Invalid Participant`)
     }
 
     if (addParticipant) {
@@ -45,7 +46,7 @@ const ViewTournaments = () => {
           }
         }
       }, "POST").then(res => {
-        console.log('success', `successfully add participant ${addParticipant}`)
+        successMessage('success', `successfully add participant ${addParticipant}`)
         getParticipantsLength()
         return res
       })

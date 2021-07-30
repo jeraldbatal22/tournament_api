@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import * as axios from '../../utils/axiosApi'
+import { successMessage } from '../../utils/message'
 
 
 const EditTournaments = () => {
@@ -31,7 +32,7 @@ const EditTournaments = () => {
     axios.request(urlEdit, newEdit, "PUT").then(res => {
       return res
     })
-    console.log('Success', 'Successfully updated')
+    successMessage('Success', 'Successfully updated')
     history.push('/')
   }
 

@@ -4,6 +4,7 @@ import { makeid } from '../../id_generator/makeId'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as axios from '../../utils/axiosApi'
+import { errorMessage, successMessage } from '../../utils/message'
 
 const CreateTournaments = () => {
   const history = useHistory()
@@ -30,11 +31,11 @@ const CreateTournaments = () => {
     const url = `tournaments.json`
     axios.request(url, newTournament, "POST").then(res => {
       if (res) {
-        console.log('Success', `Successfully created tournament of ${newTournament.data.attributes.name}`)
+        successMessage('Success', `Successfully created tournament of ${newTournament.data.attributes.name}`)
         history.push('/')
         return res
       } else {
-        console.log('Error', 'Select type of tournament')
+        errorMessage('Error', 'Select type of tournament')
       }
     })
   }

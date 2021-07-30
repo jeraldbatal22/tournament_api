@@ -1,4 +1,5 @@
 import axios from "axios"
+import { apiKey } from "./apiKey"
 
 export const request = (url = "", data = {}, method = "") => {
   const res = axios({
@@ -7,7 +8,7 @@ export const request = (url = "", data = {}, method = "") => {
     data,
     headers: {
       'Authorization-Type': 'v1',
-      'Authorization': 'dKlu3gqGrggcZP7JL8PTR7XyqlhHIFw16sUbKJ27',
+      'Authorization': apiKey,
       'Content-Type': 'application/vnd.api+json',
       'Accept': 'application/json'
     }

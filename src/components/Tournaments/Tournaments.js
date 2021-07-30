@@ -64,7 +64,7 @@ const Tournaments = (props) => {
                     <Card.Header>{list.type}</Card.Header>
                     <Card.Body>
                       <Card.Title>{list.attributes.name}</Card.Title>
-                      <Card.Title>Date Start {date} {hours}</Card.Title>
+                      <Card.Title>Date Start At {date} {hours}</Card.Title>
                       <Card.Text>
                         {list.attributes.description}
                       </Card.Text>

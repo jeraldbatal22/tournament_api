@@ -9,9 +9,7 @@ import EditTournaments from './components/Tournaments/EditTournaments';
 import ViewTournaments from './components/Tournaments/ViewTournaments';
 import List from './components/Participants/List';
 function App() {
-  const getTournaments = (tournaments) => {
-    return tournaments
-  }
+
   return (
     <Container>
       <Router>
@@ -19,7 +17,7 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            <Tournaments getTournaments={getTournaments} />
+            <Tournaments />
           </Route>
 
           <Route path="/tournaments/create">

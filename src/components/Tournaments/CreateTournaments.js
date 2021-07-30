@@ -4,7 +4,7 @@ import { makeid } from '../../id_generator/makeId'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as axios from '../../utils/axiosApi'
-import { successMessage } from '../../utils/message'
+import { errorMessage, successMessage } from '../../utils/message'
 
 const CreateTournaments = () => {
   const history = useHistory()
@@ -30,10 +30,14 @@ const CreateTournaments = () => {
     e.preventDefault()
     const url = `tournaments.json`
     axios.request(url, newTournament, "POST").then(res => {
-      successMessage('Success', `Successfully created tournament of ${newTournament.data.attributes.name}`)
-      return res
+      if (res) {
+        successMessage('Success', `Successfully created tournament of ${newTournament.data.attributes.name}`)
+        history.push('/')
+        return res
+      } else {
+        errorMessage('Error', 'Select type of tournament')
+      }
     })
-    history.push('/')
   }
 
   return (
@@ -77,6 +81,12 @@ const CreateTournaments = () => {
             <option value="call_of_duty_mobile">Call of Duty Mobile</option>
             <option value="lol_wildrift">Lol Wildrift</option>
             <option value="pubg_mobile">Pubg Mobile</option>
+            <option value="pubg_mobile">Axie Infinity</option>
+            <option value="pubg_mobile">Sausage Man</option>
+            <option value="pubg_mobile">NBA 2k19</option>
+            <option value="pubg_mobile">Tongits Go</option>
+            <option value="pubg_mobile">Valorant</option>
+            <option value="pubg_mobile">Counter Strike Go</option>
           </Form.Select>
         </Col>
       </Form.Group>
@@ -86,7 +96,7 @@ const CreateTournaments = () => {
           Type
         </Form.Label>
         <Col sm={10}>
-          <Form.Select onChange={onHandleChange} name="tournament_type">
+          <Form.Select onChange={onHandleChange} name="tournament_type" required>
             <option value="mobile_legends">Select Type</option>
             <option value="single elimination">Single Stage Tournament</option>
             <option value="double elimination">Two Stage Tournament — groups compete separately, winners proceed to a final stage (e.g. World Cup)</option>
@@ -98,8 +108,8 @@ const CreateTournaments = () => {
         <Form.Label column sm="2">
           Start Time
         </Form.Label>
-        <Col sm="10">
-          <Form.Control type="datetime-local" placeholder="Tournament Name" onChange={onHandleChange} name="starts_at" />
+        <Col sm="2">
+          <Form.Control type="datetime-local" placeholder="Tournament Name" onChange={onHandleChange} name="starts_at" required />
         </Col>
       </Form.Group>
       <Button variant="primary" type="submit" style={{ float: 'right', fontWeight: 'bold', color: '#fff' }}>SAVE AND CONTINUE</Button>

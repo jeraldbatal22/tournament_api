@@ -2,13 +2,14 @@ import * as axios from '../../utils/axiosApi'
 import { useHistory, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Spinner, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { successMessage } from '../../utils/message'
+import { errorMessage, successMessage } from '../../utils/message'
 
 const ViewTournaments = () => {
   const history = useHistory()
   let { id } = useParams()
   const urlEdit = `tournaments/${id}.json`
   const [tournament, setTournament] = useState({})
+  const [participantLength, setParticipantLength] = useState([])
 
   if (!tournament.hasOwnProperty('attributes')) {
     axios.request(urlEdit, {}, "GET").then(res => {
@@ -20,7 +21,6 @@ const ViewTournaments = () => {
       } else {
         console.log('error')
       }
-
     })
   }
 
@@ -28,6 +28,16 @@ const ViewTournaments = () => {
     e.preventDefault()
     const url = `tournaments/${id}/participants.json`
     const addParticipant = prompt('Display Name')
+
+    const find = participantLength.find(res => res.attributes.name === addParticipant)
+    if (find) {
+      return errorMessage('Error', `Participant ${addParticipant} is already taken`)
+    }
+
+    if (addParticipant === "") {
+      return errorMessage('Error', `Invalid Participant`)
+    }
+
     if (addParticipant) {
       axios.request(url, {
         data: {
@@ -37,12 +47,12 @@ const ViewTournaments = () => {
         }
       }, "POST").then(res => {
         successMessage('success', `successfully add participant ${addParticipant}`)
+        getParticipantsLength()
         return res
       })
     }
-  }
 
-  const [participantLength, setParticipantLength] = useState([])
+  }
 
   const getParticipantsLength = () => {
     const url = `tournaments/${id}/participants.json`
@@ -51,16 +61,19 @@ const ViewTournaments = () => {
       return res
     })
   }
+
   if (participantLength.length === 0) {
     getParticipantsLength()
   }
+
   const getParticipants = () => {
     history.push(`/tournaments/${id}/participants`)
   }
 
   useEffect(() => {
     getParticipantsLength()
-  })
+  }, [])
+
   return (
     <>
       {
@@ -85,7 +98,7 @@ const ViewTournaments = () => {
               </ListGroup>
               <Card.Body>
                 <Card.Link href="" onClick={addParticipants} style={{ color: '#000' }}>Add Participants</Card.Link>
-                <Card.Link href="#" style={{ color: '#000' }}>Another Link</Card.Link>
+                {/* <Card.Link href="#" style={{ color: '#000' }}>Another Link</Card.Link> */}
               </Card.Body>
             </Card>
           </>

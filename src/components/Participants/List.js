@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { ListGroup, Spinner, Button } from 'react-bootstrap'
+import { ListGroup, Spinner, Button, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as axios from '../../utils/axiosApi'
 import { useHistory, useParams } from 'react-router-dom'
-import { successMessage } from '../../utils/message'
+import { errorMessage, successMessage } from '../../utils/message'
 
-const List = () => {
+const List = (props) => {
   const history = useHistory()
   const [participants, setParticipants] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -33,9 +33,28 @@ const List = () => {
     })
   }
 
+  const editParticipant = (participant) => {
+    const addParticipant = prompt('Edit participant', participant.attributes.name)
+    const editUrl = `/tournaments/${id}/participants/${participant.id}.json`
+    console.log(editUrl)
+    console.log(participant)
+    const find = participants.find(res => res.attributes.name === addParticipant)
+    if (find) {
+      return errorMessage('Error', `Participant ${addParticipant} is already taken`)
+    }
+    if (addParticipant) {
+      axios.request(editUrl, { data: { attributes: { name: addParticipant } } }, "PUT").then(res => {
+        successMessage('Success', `Successfully Updated ${participant.attributes.name} to ${addParticipant}`)
+        getParticipants()
+        console.log(res)
+        return res
+      })
+    }
+  }
+
   useEffect(() => {
     getParticipants()
-  })
+  }, [])
 
   return (
     <>
@@ -52,9 +71,15 @@ const List = () => {
               <Button variant="dark" type="submit" onClick={getRouteBack}>Back</Button>{' '}<br></br><br></br>
               {
                 participants.map((participant, index) => (
-                  <ListGroup key={index}>
-                    <ListGroup.Item><strong onClick={() => deleteParticipant(participant)} style={{ cursor: 'pointer' }}>X</strong> {participant.attributes.name}</ListGroup.Item>
-                  </ListGroup>
+                  <Col sm="2" key={index}>
+                    <ListGroup  >
+                      <ListGroup.Item >
+                        {participant.attributes.name}
+                        <i className="fas fa-user-edit" onClick={() => editParticipant(participant)} style={{ cursor: 'pointer', float: "right", marginLeft: "10px" }}></i>
+                        <i className="fas fa-trash" onClick={() => deleteParticipant(participant)} style={{ cursor: 'pointer', float: "right" }}></i>
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </Col>
                 ))
               }
             </>

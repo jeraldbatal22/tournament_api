@@ -11,11 +11,9 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="">Navbar</Navbar.Brand>
+        <Navbar.Brand href="">TournaMatch</Navbar.Brand>
         <Nav className="me-auto" >
           <Nav.Link href="" onClick={getRoute}>Home</Nav.Link>
-          <Nav.Link href="">Features</Nav.Link>
-          <Nav.Link href="">Pricing</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

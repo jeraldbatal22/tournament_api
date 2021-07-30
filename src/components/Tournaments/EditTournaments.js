@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import * as axios from '../../utils/axiosApi'
+import { successMessage } from '../../utils/message'
 
 
 const EditTournaments = () => {
@@ -31,6 +32,7 @@ const EditTournaments = () => {
     axios.request(urlEdit, newEdit, "PUT").then(res => {
       return res
     })
+    successMessage('Success', 'Successfully updated')
     history.push('/')
   }
 
@@ -72,12 +74,18 @@ const EditTournaments = () => {
               Game
             </Form.Label>
             <Col sm="10">
-              <Form.Select onChange={onHandleChange} name="game" aria-required>
+              <Form.Select onChange={onHandleChange} name="game" aria-required defaultValue={newEdit.data.attributes.name}>
                 <option value="mobile_legends" >Select Game</option>
                 <option value="mobile_legends">Mobile Legends</option>
                 <option value="call_of_duty_mobile">Call of Duty Mobile</option>
                 <option value="lol_wildrift">Lol Wildrift</option>
                 <option value="pubg_mobile">Pubg Mobile</option>
+                <option value="pubg_mobile">Axie Infinity</option>
+                <option value="pubg_mobile">Sausage Man</option>
+                <option value="pubg_mobile">NBA 2k19</option>
+                <option value="pubg_mobile">Tongits Go</option>
+                <option value="pubg_mobile">Valorant</option>
+                <option value="pubg_mobile">Counter Strike Go</option>
               </Form.Select>
             </Col>
           </Form.Group>
@@ -99,7 +107,7 @@ const EditTournaments = () => {
             <Form.Label column sm="2">
               Start Time
             </Form.Label>
-            <Col sm="10">
+            <Col sm="2">
               <Form.Control type="datetime-local" placeholder="Tournament Name" onChange={onHandleChange} defaultValue={newEdit.data.attributes.timestamps.startsAt} name="starts_at" />
             </Col>
           </Form.Group>

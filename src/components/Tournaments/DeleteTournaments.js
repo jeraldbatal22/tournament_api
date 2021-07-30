@@ -18,14 +18,14 @@ const DeleteTournaments = (props) => {
 
   useEffect(() => {
     props.getData()
-  })
+  }, [props])
 
   return (
     <Modal show={props.show} onHide={handleClose} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Delete {props.tournament.attributes.name} {props.tournament.id}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you sure? you want to delete this tournaments?</Modal.Body>
+      <Modal.Body>Are you sure? you want to delete this tournament?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancel
